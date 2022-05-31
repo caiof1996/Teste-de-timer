@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronômetro</title>
+
+    <style>
+       body {
+          background-image: url("https://img.freepik.com/fotos-gratis/figura-triangular-geometrica-legal-em-uma-luz-de-laser-neon-otima-para-fundos-e-papeis-de-parede_181624-9331.jpg?t=st=1653914529~exp=1653915129~hmac=d3700172f26d3b60851ba1de2bd59f56137963f0be237fdac686ad556842832a&w=826.jpg"); 
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+       .container{
+            text-align: center;
+            position: absolute;
+            background-color:rgba(0.1,0,0, 0.8);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            border-radius: 15px;
+            padding: 15px;
+            color:aliceblue;
+            font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+        }
+        
+        button{
+            background: #836fff;
+            color: white;
+            font-size: 32px;
+            padding: 8px 20px;
+            cursor: pointer;
+            border: 0;
+
+        
+        }
+      
+    </style>
+
+</head>
+<body>
+    <audio id="sound" src="alarm.mp3" style="display: none;"></audio>
+    
+        <div class="container">
+          
+            
+            <h2>Minutos:</h2>
+                <select id="minutos" nome="minutos"></select>
+
+              <h2>Segundos:</h2>
+                <select id="segundos" nome="segundos"></select>
+              <br/>
+              <br/>
+              <button id="começar">Start</button>
+              <button id="parar">Stop</button>
+              <div id="display">
+                  <h3></h3>
+              </div> <!--display-->
+
+
+        </div> <!--container-->
+
+        <script>
+            var display = document.getElementById('display');
+            var minutos = document.getElementById('minutos');
+            var segundos = document.getElementById('segundos');
+            var começar = document.getElementById('começar');
+            
+            
+            var cronometroSeg;
+            var minutoAtual;
+            var segundoAtual;
+            var interval;
+
+            for(var i = 0; i <= 59; i++){
+                minutos.innerHTML+='<option value="'+i+'">'+i+'</option>';
+            }
+            for(var i = 1; i <= 59; i++){
+                segundos.innerHTML+='<option value="'+i+'">'+i+'</option>';
+            }
+            começar.addEventListener('click', function(){
+                
+                minutoAtual = minutos.value;
+                segundoAtual = segundos.value;
+                display.childNodes[1].innerHTML = minutoAtual + ":" + segundoAtual;
+                
+                interval = setInterval(function(){
+                       segundoAtual--;
+                    if (segundoAtual <=0){
+                        if (minutoAtual > 0){
+                            minutoAtual --;
+                            segundoAtual = 59;
+                        }
+                        else{
+                            
+                            document.getElementById("sound").play();
+                            clearInterval(interval);
+                        }
+                    }
+                    display.childNodes[1].innerHTML = minutoAtual + ":" + segundoAtual;
+                 },1000);
+                })
+                    
+        
+
+
+
+        </script>
+</body>
+</html>
